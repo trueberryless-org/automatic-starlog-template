@@ -4,7 +4,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Layout from '../layouts/IndexLayout.astro';
 
 const posts = await getCollection('releases');
-posts.sort((a, b) => +b.data.date - +a.data.date);
+posts.sort((a, b) => +b.data.publishedAt - +a.data.publishedAt);
 ---
 
 <Layout>
@@ -18,8 +18,8 @@ posts.sort((a, b) => +b.data.date - +a.data.date);
 						<div class="version_wrapper">
 							<div class="version_info">
 								<a href={`/releases/${post.id}`}>
-									<div class="version_number">{post.data.versionNumber}</div>
-									<FormattedDate class="date" date={post.data.date} />
+									<div class="version_number">{post.data.versionNum}</div>
+									<FormattedDate class="date" date={new Date(post.data.publishedAt)} />
 								</a>
 							</div>
 						</div>

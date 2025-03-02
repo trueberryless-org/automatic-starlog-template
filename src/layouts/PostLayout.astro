@@ -16,9 +16,8 @@ const { release } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead
-			title={release.data.title}
+			title={release.data.name}
 			description={release.data.description}
-			image={release.data.image}
 		/>
 	</head><body>
 		<div class="glow"></div>
@@ -26,8 +25,8 @@ const { release } = Astro.props;
 		<div class="post single" transition:persist transition:name="post">
 			<div class="version_wrapper">
 				<div class="version_info">
-					<div class="version_number">{release.data.versionNumber}</div>
-					<FormattedDate class="date" date={release.data.date} />
+					<div class="version_number">{release.data.versionNum}</div>
+					<FormattedDate class="date" date={new Date(release.data.publishedAt)} />
 				</div>
 			</div>
 			<div class="content">
