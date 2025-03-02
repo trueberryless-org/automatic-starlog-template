@@ -2,35 +2,38 @@
 import { getCollection, render } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import Layout from '../layouts/IndexLayout.astro';
+import { addExpressiveCode } from '../libs/rehype';
 
 const posts = await getCollection('releases');
+
+posts.map(async (post) => {
+  post.data.descriptionHTML = await addExpressiveCode(post.data.descriptionHTML);
+  return post;
+});
+
 posts.sort((a, b) => +b.data.publishedAt - +a.data.publishedAt);
 ---
 
 <Layout>
-	<main>
-		<h1 class="page_title">Changelog</h1>
-		<hr />
-		<ul class="posts" transition:name="post">
-			{
-				posts.map((post) => (
-					<li class="post">
-						<div class="version_wrapper">
-							<div class="version_info">
-								<a href={`/releases/${post.id}`}>
-									<div class="version_number">{post.data.versionNum}</div>
-									<FormattedDate class="date" date={new Date(post.data.publishedAt)} />
-								</a>
-							</div>
-						</div>
-						<div class="content">
-							{render(post).then(({ Content }) => (
-								<Content />
-							))}
-						</div>
-					</li>
-				))
-			}
-		</ul>
-	</main>
+  <main>
+    <h1 class="page_title">Changelog</h1>
+    <hr />
+    <ul class="posts" transition:name="post">
+      {
+        posts.map((post) => (
+          <li class="post">
+            <div class="version_wrapper">
+              <div class="version_info">
+                <a href={`/releases/${post.id}`}>
+                  <div class="version_number">{post.data.versionNum}</div>
+                  <FormattedDate class="date" date={new Date(post.data.publishedAt)} />
+                </a>
+              </div>
+            </div>
+            <div class="content" set:html={post.data.descriptionHTML}></div>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
 </Layout>
