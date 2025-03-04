@@ -4,12 +4,11 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Layout from '../layouts/IndexLayout.astro';
 import { addExpressiveCode } from '../libs/rehype';
 
-const posts = await getCollection('releases');
-
-posts.map(async (post) => {
+const unprocessedPosts = await getCollection('releases');
+const posts = await Promise.all(unprocessedPosts.map(async (post) => {
   post.data.descriptionHTML = await addExpressiveCode(post.data.descriptionHTML);
   return post;
-});
+}));
 
 posts.sort((a, b) => +b.data.publishedAt - +a.data.publishedAt);
 ---

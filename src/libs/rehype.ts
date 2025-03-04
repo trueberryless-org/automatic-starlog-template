@@ -10,7 +10,5 @@ export async function addExpressiveCode(html) {
     .use(rehypeStringify) // Convert back to HTML
     .process(html);
 
-  console.log(result.toString());
-
   return result.toString();
 }

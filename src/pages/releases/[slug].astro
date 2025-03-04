@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/PostLayout.astro';
+import { addExpressiveCode } from '../../libs/rehype';
 
 export async function getStaticPaths() {
 	const releases = await getCollection('releases');
@@ -13,9 +14,9 @@ export async function getStaticPaths() {
 
 const { release } = Astro.props;
 
-const { Content } = await render(release);
+const htmlContent = await addExpressiveCode(release.data.descriptionHTML);
+
+console.log(htmlContent);
 ---
 
-<Layout {release}>
-	<Content />
-</Layout>
+<Layout {release} set:html={htmlContent} />
