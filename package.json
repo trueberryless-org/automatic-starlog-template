@@ -16,7 +16,12 @@
     "rehype-parse": "^9.0.1",
     "rehype-stringify": "^10.0.1",
     "sass": "^1.83.4",
+    "semver": "^7.7.1",
     "sharp": "^0.33.3",
-    "unified": "^11.0.5"
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/semver": "^7.5.8"
   }
 }
