@@ -1,11 +1,11 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import { render } from 'studiocms:markdown-remark';
 import FormattedDate from '../components/FormattedDate.astro';
 import Layout from '../layouts/IndexLayout.astro';
 import { addExpressiveCode, removeH1s } from '../libs/rehype';
 import { getSemVerFromRelease, getVersionWithoutPatch, isAtLeastMinorRelease } from '../libs/semver';
-import { z } from "zod";
 import type { CollectionEntry } from "astro:content";
 
 const unprocessedPosts = await getCollection('releases');
@@ -13,7 +13,9 @@ const unprocessedPosts = await getCollection('releases');
 // Process the posts
 const posts = await Promise.all(
   unprocessedPosts.map(async (post: CollectionEntry<"releases">) => {
-    post.data.descriptionHTML = await addExpressiveCode(await removeH1s(post.data.descriptionHTML));
+    let renderedHtml = await render(post.data.description);
+    console.log(renderedHtml);
+    post.data.descriptionHTML = await addExpressiveCode(await removeH1s(renderedHtml));
 
     const version = getSemVerFromRelease(post);
     const showImage = isAtLeastMinorRelease(version);
