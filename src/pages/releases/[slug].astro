@@ -1,9 +1,9 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/PostLayout.astro';
-import { addExpressiveCode, removeH1s } from '../../libs/rehype';
 import { getSemVerFromRelease, getVersionWithoutPatch, isAtLeastMinorRelease } from '../../libs/semver';
+import { render } from '../../libs/markdown';
 
 export async function getStaticPaths() {
 	const releases = await getCollection('releases');
@@ -16,7 +16,8 @@ export async function getStaticPaths() {
 
 const { release } = Astro.props;
 
-const htmlContent = await addExpressiveCode(await removeH1s(release.data.descriptionHTML));
+const renderedHtml = await render(release.data.description);
+const htmlContent = renderedHtml.code;
 
 const version = getSemVerFromRelease(release);
 const showImage = isAtLeastMinorRelease(version);
