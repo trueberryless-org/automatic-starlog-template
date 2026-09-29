@@ -1,12 +1,14 @@
 ---
-import '../styles/global.scss';
+import { FooterLinks } from "../consts";
+
+const year = new Date().getFullYear();
 ---
 
 <footer>
-	<p>© 2025</p>
-	<div class="footer_links">
-		<a href="#">Discord</a>
-		<a href="#">X</a>
-		<a href="#">GitHub</a>
-	</div>
+  <p>© {year}</p>
+  <div class="footer_links">
+    {FooterLinks.map(({ label, url }) => (
+      <a href={url}>{label}</a>
+    ))}
+  </div>
 </footer>
