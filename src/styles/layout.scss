@@ -87,8 +87,10 @@ hr {
 
 nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 1em;
   margin: 0 0 2em 0;
   padding: 2em 0;
 
@@ -117,8 +119,11 @@ nav {
       color: colors.$white;
     }
   }
+  .links {
+    display: flex;
+    gap: 1em;
+  }
   .links a {
-    margin-left: 1em;
     color: colors.color(gray, 800);
     @media (prefers-color-scheme: dark) {
       color: colors.color(gray, 200);

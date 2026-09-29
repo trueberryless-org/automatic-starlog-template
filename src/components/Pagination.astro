@@ -15,15 +15,15 @@ const { page } = Astro.props;
     {page.url.prev ? (
       <a href={page.url.prev}>← Newer releases</a>
     ) : (
-      <span></span>
+      <span aria-hidden="true"></span>
     )}
-    <span class="current">
+    <span class="current" aria-current="page">
       Page {page.currentPage} of {page.lastPage}
     </span>
     {page.url.next ? (
       <a href={page.url.next}>Older releases →</a>
     ) : (
-      <span></span>
+      <span aria-hidden="true"></span>
     )}
   </nav>
 )}
